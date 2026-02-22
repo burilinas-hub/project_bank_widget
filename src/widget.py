@@ -3,6 +3,7 @@ from datetime import datetime
 
 
 def mask_account_card(info: str) -> str:
+    """Функция - которая добавляет название карты и маскирует номер"""
     parts = info.split()
     # Первые два элемента — название карты
     card_type = " ".join(parts[:-1])  # всё, кроме последнего, например "Visa Platinum"
@@ -13,7 +14,8 @@ def mask_account_card(info: str) -> str:
 
 
 def get_date(date_str: str) -> str:
+    """Функция, которая возвращает строку с датой в формате "ДД.ММ.ГГГГ"""
     # Парсим строку в объект datetime
     dt = datetime.fromisoformat(date_str)
-    # Форматируем в "День.Месяц.Год"
+    # Форматируем в "День. Месяц. Год"
     return dt.strftime("%d.%m.%Y")
