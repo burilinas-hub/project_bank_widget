@@ -1,5 +1,9 @@
+from typing import List
+
 import pytest
-from src.widjet import mask_account_card, get_date
+
+from src.widjet import get_date, mask_account_card
+
 
 @pytest.mark.parametrize(
     "info, expected_inclusions",
@@ -8,7 +12,10 @@ from src.widjet import mask_account_card, get_date
         # Можно добавить другие случаи, если есть
     ]
 )
-def test_mask_account_card(info, expected_inclusions):
+def test_mask_account_card(
+    info: str,
+    expected_inclusions: List[str]
+) -> None:
     result = mask_account_card(info)
     for expected in expected_inclusions:
         assert expected in result
@@ -20,7 +27,10 @@ def test_mask_account_card(info, expected_inclusions):
         # Можно добавить другие форматы или случаи
     ]
 )
-def test_get_date(date_str, expected_date):
+def test_get_date(
+    date_str: str,
+    expected_date: str
+) -> None:
     assert get_date(date_str) == expected_date
 
 @pytest.mark.parametrize(
@@ -30,6 +40,8 @@ def test_get_date(date_str, expected_date):
         # Можно добавить другие некорректные строки
     ]
 )
-def test_get_date_invalid_format(invalid_date):
+def test_get_date_invalid_format(
+    invalid_date: str
+) -> None:
     with pytest.raises(ValueError):
         get_date(invalid_date)
