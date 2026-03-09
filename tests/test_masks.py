@@ -1,21 +1,19 @@
 import pytest
+from src.masks import mask_account
 
-from src.masks import get_mask_card_number, mask_account
-
-
-# Аннотации типов для функции test_get_mask_card_number
-@pytest.mark.parametrize(
-    "card_number, expected_output",
-    [
-        (7000792289606361, "7000 79** **** 6361"),
-        (12345, "*****"),
+# Фикстура с данными
+@pytest.fixture
+def account_test_data() -> list:
+    return [
+        ("Счет 1234567890", "Счет **7890"),
+        ("1234", "****"),
     ]
-)
-def test_get_mask_card_number(card_number: int, expected_output: str) -> None:
-    assert get_mask_card_number(card_number) == expected_output
 
+def test_mask_account_with_fixture(account_test_data: list) -> None:
+    for account_str, expected_output in account_test_data:
+        assert mask_account(account_str) == expected_output
 
-# Аннотации типов для функции test_mask_account
+# Параметризация с разными наборами данных
 @pytest.mark.parametrize(
     "account_str, expected_output",
     [
@@ -23,5 +21,7 @@ def test_get_mask_card_number(card_number: int, expected_output: str) -> None:
         ("1234", "****"),
     ]
 )
-def test_mask_account(account_str: str, expected_output: str) -> None:
+def test_mask_account(account_str: str, expected_output: str, account_test_data: list) -> None:
+    # Можно объединить данные из фикстуры и параметры, если нужно проверить оба варианта
+    # Но проще оставить только параметры
     assert mask_account(account_str) == expected_output

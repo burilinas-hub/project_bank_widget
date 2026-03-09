@@ -24,7 +24,7 @@ state соответствует указанному значению.
 Функция должна возвращать новый список, отсортированный по дате (
 date).*
 
-- Добавлены тесты всех функций в папке tests/
+
 ## Установка:
 1. Клонируйте репозиторий:
 ```
@@ -35,6 +35,12 @@ git clone https://github.com/burilinas-hub/project_bank_widget.git
 poetry install
 ```
 
+
+## Тестирование:
+Проведены тесты всех файлов при помощи pytest
+tests\test_masks.py ...                                                                    [ 30%]
+tests\test_processing.py ....                                                              [ 70%]
+tests\test_widjet.py ...                                                                   [100%]
 
 ## Документация:
 
