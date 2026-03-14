@@ -1,6 +1,7 @@
 import pytest
 from src.generators import filter_by_currency, transaction_descriptions
 
+
 @pytest.fixture
 def sample_transactions():
     return [
@@ -81,6 +82,7 @@ def sample_transactions():
         }
     ]
 
+
 @pytest.mark.parametrize("currency_code,expected_ids", [
     ("USD", [939719570, 142264268, 895315941]),
     ("RUB", [873106923, 594226727]),
@@ -90,6 +92,7 @@ def test_filter_by_currency(sample_transactions, currency_code, expected_ids):
     result = list(filter_by_currency(sample_transactions, currency_code))
     result_ids = [t['id'] for t in result]
     assert result_ids == expected_ids
+
 
 @pytest.mark.parametrize("expected_descriptions", [
     [
@@ -104,10 +107,12 @@ def test_transaction_descriptions(sample_transactions, expected_descriptions):
     descriptions = list(transaction_descriptions(sample_transactions))
     assert descriptions == expected_descriptions
 
+
 # Дополнительный тест для пустого списка
 def test_filter_by_currency_empty():
     data = []
     assert list(filter_by_currency(data, "USD")) == []
+
 
 def test_transaction_descriptions_empty():
     assert list(transaction_descriptions([])) == []
