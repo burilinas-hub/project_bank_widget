@@ -23,8 +23,8 @@ def card_number_generator(start, end):
     в диапазоне от start до end включительно.
     """
     for number in range(start, end + 1):
-        # Форматируем число как 16 цифр с ведущими нулями
-        num_str = f"{number:016d}"
-        # Разбиваем на 4 части
-        parts = [num_str[i:i+4] for i in range(0, 16, 4)]
-        yield " ".join(parts)
+        # преобразуем число в строку с ведущими нулями до 16 символов
+        num_str = str(number).zfill(16)
+        # делим на 4 части по 4 символа
+        parts = [num_str[i:i + 4] for i in range(0, 16, 4)]
+        yield ' '.join(parts)

@@ -1,5 +1,5 @@
 import pytest
-from src.generators import filter_by_currency, transaction_descriptions
+from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
 
 
 @pytest.fixture
@@ -108,7 +108,6 @@ def test_transaction_descriptions(sample_transactions, expected_descriptions):
     assert descriptions == expected_descriptions
 
 
-# Дополнительный тест для пустого списка
 def test_filter_by_currency_empty():
     data = []
     assert list(filter_by_currency(data, "USD")) == []
@@ -116,3 +115,47 @@ def test_filter_by_currency_empty():
 
 def test_transaction_descriptions_empty():
     assert list(transaction_descriptions([])) == []
+
+
+@pytest.mark.parametrize(
+    "start, end, expected_numbers",
+    [
+        (
+            1, 1,
+            ["0000 0000 0000 0001"]
+        ),
+        (
+            1, 3,
+            [
+                "0000 0000 0000 0001",
+                "0000 0000 0000 0002",
+                "0000 0000 0000 0003"
+            ]
+        ),
+        (
+             9999999999999990, 9999999999999992,
+            [
+                "9999 9999 9999 9990",
+                "9999 9999 9999 9991",
+                "9999 9999 9999 9992"
+            ]
+        ),
+        (
+            123456789012345, 123456789012347,
+            [
+                "0123 4567 8901 2345",
+                "0123 4567 8901 2346",
+                "0123 4567 8901 2347"
+            ]
+        ),
+    ])
+def test_card_number_generator(start, end, expected_numbers):
+    gen = card_number_generator(start, end)
+    result = list(gen)
+    assert result == expected_numbers
+    for number in result:
+        parts = number.split()
+        assert len(parts) == 4
+        for part in parts:
+            assert len(part) == 4
+            assert part.isdigit()
